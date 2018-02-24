@@ -45,8 +45,9 @@ public class CategoryService {
 
         Category c2 = new Category();
         c2.setId(1);
-        c2.setName("名字长对应字段放不下,名字长对应字段放不下,名字长对应字段放不下,名字长对应字段放不下,名字长对应字段放不下,名字长对应字段放不下,名字长对应字段放不下,名字长对应字段放不下,");
+        c2.setName("bentengdi");
+        //c2.setName("名字长对应字段放不下,名字长对应字段放不下,名字长对应字段放不下,名字长对应字段放不下,名字长对应字段放不下,名字长对应字段放不下,名字长对应字段放不下,名字长对应字段放不下,");
         categoryMapper.add(c2);
-    };
+    }
 
 }

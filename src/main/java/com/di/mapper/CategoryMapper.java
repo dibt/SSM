@@ -19,6 +19,8 @@ public interface CategoryMapper {
 
     public List<Category> list();
 
+    public List<Category> list(Page page);
+
     public int count();
 
     public List<Category> listtop(Page page);

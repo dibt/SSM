@@ -26,12 +26,12 @@ public class SSMTest {
     public void testList() {
             categoryService.deleteAll();
             categoryService.addTwo();
-//        Page p = new Page();
-//        p.setStart(2);
-//        p.setCount(30);
-//        List<Category> cs=categoryMapper.list(p);
-//        for (Category c : cs) {
-//            System.out.println(c.getName());
-//        }
+        Page p = new Page();
+        p.setStart(2);
+        p.setCount(30);
+        List<Category> cs=categoryMapper.list(p);
+        for (Category c : cs) {
+            System.out.println(c.getName());
+        }
     }
 }
