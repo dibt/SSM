@@ -25,7 +25,7 @@ public class SSMTest {
     @Test
     public void testList() {
             categoryService.deleteAll();
-            categoryService.addTwo();
+            //categoryService.addTwo();
         Page p = new Page();
         p.setStart(2);
         p.setCount(30);

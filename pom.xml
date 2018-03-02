@@ -18,254 +18,253 @@
   under the License.
 -->
 <!-- $Id: pom.xml 642118 2008-03-28 08:04:16Z reinhard $ -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-  <modelVersion>4.0.0</modelVersion>
-  <packaging>war</packaging>
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>war</packaging>
 
-  <name>ssm</name>
-  <groupId>com.di</groupId>
-  <artifactId>ssm</artifactId>
-  <version>1.0-SNAPSHOT</version>
+    <name>ssm</name>
+    <groupId>com.di</groupId>
+    <artifactId>ssm</artifactId>
+    <version>1.0-SNAPSHOT</version>
 
-  <properties>
-    <org.springframework.version>4.3.12.RELEASE</org.springframework.version>
-    <javax-servlet-api.version>3.1.0</javax-servlet-api.version>
-    <aopalliance.version>1.0</aopalliance.version>
-    <github-pagehelper.version>5.1.2</github-pagehelper.version>
-    <github-jsqlparser.version>1.0</github-jsqlparser.version>
-    <org-mybatis.version>3.4.1</org-mybatis.version>
-    <mybatis-spring.version>1.3.1</mybatis-spring.version>
-    <mybatis-generator-core.version>1.3.5</mybatis-generator-core.version>
-    <junit.version>4.12</junit.version>
-    <jstl.version>1.2</jstl.version>
-    <log4j.version>1.2.17</log4j.version>
-    <com-druid.version>1.1.5</com-druid.version>
-    <commons-logging.version>1.2</commons-logging.version>
-    <commons-fileupload.version>1.3.2</commons-fileupload.version>
-    <commons-io.version>2.5</commons-io.version>
-    <commons-lang3.version>3.6</commons-lang3.version>
-    <net-jtds.version>1.3.1</net-jtds.version>
-    <!--<mysql.version>6.0.6</mysql.version>-->
-    <jackson-databind.version>2.9.0</jackson-databind.version>
-    <fastjson.version>1.2.38</fastjson.version>
+    <properties>
+        <org.springframework.version>4.3.12.RELEASE</org.springframework.version>
+        <javax-servlet-api.version>3.1.0</javax-servlet-api.version>
+        <aopalliance.version>1.0</aopalliance.version>
+        <github-pagehelper.version>5.1.2</github-pagehelper.version>
+        <github-jsqlparser.version>1.0</github-jsqlparser.version>
+        <org-mybatis.version>3.4.1</org-mybatis.version>
+        <mybatis-spring.version>1.3.1</mybatis-spring.version>
+        <mybatis-generator-core.version>1.3.5</mybatis-generator-core.version>
+        <junit.version>4.12</junit.version>
+        <jstl.version>1.2</jstl.version>
+        <log4j.version>1.2.17</log4j.version>
+        <com-druid.version>1.1.5</com-druid.version>
+        <commons-logging.version>1.2</commons-logging.version>
+        <commons-fileupload.version>1.3.2</commons-fileupload.version>
+        <commons-io.version>2.5</commons-io.version>
+        <commons-lang3.version>3.6</commons-lang3.version>
+        <net-jtds.version>1.3.1</net-jtds.version>
+        <mysql.version>6.0.6</mysql.version>
+        <jackson-databind.version>2.9.0</jackson-databind.version>
+        <fastjson.version>1.2.38</fastjson.version>
+        <commons-dbcp.version>1.4</commons-dbcp.version>
 
-  </properties>
+    </properties>
 
-  <dependencies>
+    <dependencies>
 
-    <!--spring、springmvc-->
-    <dependency>
-    <groupId>org.springframework</groupId>
-    <artifactId>spring-test</artifactId>
-    <version>${org.springframework.version}</version>
-    </dependency>
+        <!--spring、springmvc-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>
 
-    <dependency>
-    <groupId>org.springframework</groupId>
-    <artifactId>spring-webmvc</artifactId>
-    <version>${org.springframework.version}</version>
-    </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>
 
-    <dependency>
-    <groupId>org.springframework</groupId>
-    <artifactId>spring-jdbc</artifactId>
-    <version>${org.springframework.version}</version>
-    </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>
 
-    <dependency>
-    <groupId>org.springframework</groupId>
-    <artifactId>spring-aspects</artifactId>
-    <version>${org.springframework.version}</version>
-    </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aspects</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>
 
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>javax.servlet-api</artifactId>
-      <version>${javax-servlet-api.version}</version>
-      <scope>provided</scope>
-    </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>${javax-servlet-api.version}</version>
+            <scope>provided</scope>
+        </dependency>
 
-    <dependency>
-    <groupId>aopalliance</groupId>
-    <artifactId>aopalliance</artifactId>
-    <version>${aopalliance.version}</version>
-    </dependency>
+        <dependency>
+            <groupId>aopalliance</groupId>
+            <artifactId>aopalliance</artifactId>
+            <version>${aopalliance.version}</version>
+        </dependency>
 
-    <!-- pageHelper -->
-    <dependency>
-    <groupId>com.github.pagehelper</groupId>
-    <artifactId>pagehelper</artifactId>
-    <version>${github-pagehelper.version}</version>
-    </dependency>
+        <!-- pageHelper -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+            <version>${github-pagehelper.version}</version>
+        </dependency>
 
-    <!--jsqlparser-->
-    <dependency>
-    <groupId>com.github.jsqlparser</groupId>
-    <artifactId>jsqlparser</artifactId>
-    <version>${github-jsqlparser.version}</version>
-    </dependency>
+        <!--jsqlparser-->
+        <dependency>
+            <groupId>com.github.jsqlparser</groupId>
+            <artifactId>jsqlparser</artifactId>
+            <version>${github-jsqlparser.version}</version>
+        </dependency>
 
-    <!--mybatis-->
-    <dependency>
-    <groupId>org.mybatis</groupId>
-    <artifactId>mybatis</artifactId>
-    <version>${org-mybatis.version}</version>
-    </dependency>
+        <!--mybatis-->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>${org-mybatis.version}</version>
+        </dependency>
 
-    <!-- https://mvnrepository.com/artifact/org.mybatis/mybatis-spring -->
-    <dependency>
-      <groupId>org.mybatis</groupId>
-      <artifactId>mybatis-spring</artifactId>
-      <version>${mybatis-spring.version}</version>
-    </dependency>
+        <!-- https://mvnrepository.com/artifact/org.mybatis/mybatis-spring -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+            <version>${mybatis-spring.version}</version>
+        </dependency>
 
-    <!-- https://mvnrepository.com/artifact/org.mybatis.generator/mybatis-generator-core -->
-    <dependency>
-      <groupId>org.mybatis.generator</groupId>
-      <artifactId>mybatis-generator-core</artifactId>
-      <version>${mybatis-generator-core.version}</version>
-    </dependency>
+        <!-- https://mvnrepository.com/artifact/org.mybatis.generator/mybatis-generator-core -->
+        <dependency>
+            <groupId>org.mybatis.generator</groupId>
+            <artifactId>mybatis-generator-core</artifactId>
+            <version>${mybatis-generator-core.version}</version>
+        </dependency>
 
-    <dependency>
-    <groupId>junit</groupId>
-    <artifactId>junit</artifactId>
-    <version>${junit.version}</version>
-    </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+        </dependency>
 
-    <!-- JSP相关 -->
-    <dependency>
-    <groupId>jstl</groupId>
-    <artifactId>jstl</artifactId>
-    <version>${jstl.version}</version>
-    </dependency>
+        <!-- JSP相关 -->
+        <dependency>
+            <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+            <version>${jstl.version}</version>
+        </dependency>
 
-    <dependency>
-    <groupId>log4j</groupId>
-    <artifactId>log4j</artifactId>
-    <version>${log4j.version}</version>
-    </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
 
-    <dependency>
-    <groupId>com.alibaba</groupId>
-    <artifactId>druid</artifactId>
-    <version>${com-druid.version}</version>
-    </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>${com-druid.version}</version>
+        </dependency>
 
-    <!--common-->
-    <dependency>
-    <groupId>commons-logging</groupId>
-    <artifactId>commons-logging</artifactId>
-    <version>${commons-logging.version}</version>
-    </dependency>
+        <!--common-->
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>${commons-logging.version}</version>
+        </dependency>
 
-    <dependency>
-    <groupId>commons-fileupload</groupId>
-    <artifactId>commons-fileupload</artifactId>
-    <version>${commons-fileupload.version}</version>
-    </dependency>
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>${commons-fileupload.version}</version>
+        </dependency>
 
-    <dependency>
-    <groupId>commons-io</groupId>
-    <artifactId>commons-io</artifactId>
-    <version>${commons-io.version}</version>
-    </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-io.version}</version>
+        </dependency>
 
-    <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
-    <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-lang3</artifactId>
-      <version>${commons-lang3.version}</version>
-    </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons-lang3.version}</version>
+        </dependency>
 
-    <!-- https://mvnrepository.com/artifact/net.sourceforge.jtds/jtds -->
-    <dependency>
-      <groupId>net.sourceforge.jtds</groupId>
-      <artifactId>jtds</artifactId>
-      <version>${net-jtds.version}</version>
-    </dependency>
+        <!-- https://mvnrepository.com/artifact/net.sourceforge.jtds/jtds -->
+        <dependency>
+            <groupId>net.sourceforge.jtds</groupId>
+            <artifactId>jtds</artifactId>
+            <version>${net-jtds.version}</version>
+        </dependency>
 
-    <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
-    <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-databind</artifactId>
-      <version>${jackson-databind.version}</version>
-    </dependency>
-
-    <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
-    <dependency>
-      <groupId>com.alibaba</groupId>
-      <artifactId>fastjson</artifactId>
-      <version>${fastjson.version}</version>
-    </dependency>
+        <!-- https://mvnrepository.com/artifact/commons-dbcp/commons-dbcp -->
+        <dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>${commons-dbcp.version}</version>
+        </dependency>
 
 
+        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson-databind.version}</version>
+        </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
+        </dependency>
 
+        <!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>2.9.0</version>
+        </dependency>
 
-    <!--<dependency>-->
-      <!--<groupId>mysql</groupId>-->
-      <!--<artifactId>mysql-connector-java</artifactId>-->
-      <!--<version>${mysql.version}</version>-->
-    <!--</dependency>-->
+        <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>${mysql.version}</version>
+        </dependency>
 
-  </dependencies>
+    </dependencies>
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <excludes>
+                    <exclude>development/*</exclude>
+                    <exclude>test/*</exclude>
+                    <exclude>production/*</exclude>
+                </excludes>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/resources/${profiles.active}</directory>
+            </resource>
+        </resources>
 
-  <build>
-    <finalName>${project.artifactId}</finalName>
-    <!--<plugins>-->
-      <!-- 资源文件拷贝插件 -->
-      <!--<plugin>-->
-        <!--<groupId>org.apache.maven.plugins</groupId>-->
-        <!--<artifactId>maven-resources-plugin</artifactId>-->
-        <!--<version>2.7</version>-->
-        <!--<configuration>-->
-          <!--<encoding>UTF-8</encoding>-->
-        <!--</configuration>-->
-      <!--</plugin>-->
-      <!--&lt;!&ndash; java编译插件 &ndash;&gt;-->
-      <!--<plugin>-->
-        <!--<groupId>org.apache.maven.plugins</groupId>-->
-        <!--<artifactId>maven-compiler-plugin</artifactId>-->
-        <!--<version>3.5.1</version>-->
-        <!--<configuration>-->
-          <!--<source>1.7</source>-->
-          <!--<target>1.7</target>-->
-          <!--<encoding>UTF-8</encoding>-->
-        <!--</configuration>-->
-      <!--</plugin>-->
-    <!--</plugins>-->
-    <!--<pluginManagement>-->
-      <!--<plugins>-->
-        <!--&lt;!&ndash; 配置Tomcat插件 &ndash;&gt;-->
-        <!--<plugin>-->
-          <!--<groupId>org.apache.tomcat.maven</groupId>-->
-          <!--<artifactId>tomcat7-maven-plugin</artifactId>-->
-          <!--<version>2.2</version>-->
-        <!--</plugin>-->
-      <!--</plugins>-->
-    <!--</pluginManagement>-->
+    </build>
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <runningEnv>develop</runningEnv>
+            </properties>
+        </profile>
 
-    <resources>
-      <resource>
-        <directory>src/main/resources</directory>
-        <includes>
-          <include>**/*.properties</include>
-          <include>**/*.xml</include>
-          <include>**/*.tld</include>
-        </includes>
-        <filtering>false</filtering>
-      </resource>
-      <resource>
-        <directory>src/main/java</directory>
-        <includes>
-          <include>**/*.properties</include>
-          <include>**/*.xml</include>
-        </includes>
-        <filtering>false</filtering>
-      </resource>
-    </resources>
+        <profile>
+            <id>test</id>
+            <properties>
+                <runningEnv>test</runningEnv>
+            </properties>
+        </profile>
 
-  </build>
+        <profile>
+            <id>production</id>
+            <properties>
+                <runningEnv>production</runningEnv>
+            </properties>
+        </profile>
+    </profiles>
 
 </project>

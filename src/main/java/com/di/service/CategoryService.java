@@ -3,11 +3,13 @@ package com.di.service;
 import com.di.mapper.CategoryMapper;
 import com.di.pojo.Category;
 import com.di.util.Page;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,10 +17,17 @@ import java.util.List;
  */
 @Service
 public class CategoryService {
+    private static final Logger logger = Logger.getLogger(CategoryMapper.class);
     @Autowired
     CategoryMapper categoryMapper;
     public List<Category> list(){
-        return categoryMapper.list();
+        try {
+            List<Category> list =categoryMapper.list();
+            return  list;
+        }catch(Exception e) {
+            logger.error(e.getMessage(),e);
+            return new ArrayList<>();
+        }
     }
     public List<Category> list(Page page) {
         // TODO Auto-generated method stub
@@ -26,28 +35,48 @@ public class CategoryService {
     }
 
     public int total() {
-        return categoryMapper.total();
-    }
-
-    public void deleteAll() {
-        List<Category> cs = list();
-        for (Category c : cs) {
-
-            categoryMapper.delete(c.getId());
+        Integer total = null;
+        try {
+            total=categoryMapper.total();
+            return total;
+        }catch (Exception e){
+            logger.error(e.getMessage(),e);
+            return total;
         }
     }
-    @Transactional(propagation=Propagation.REQUIRED,rollbackForClassName="Exception")
-    public void addTwo() {
-        Category c1 = new Category();
-        c1.setId(0);
-        c1.setName("短的名字");
-        categoryMapper.add(c1);
 
-        Category c2 = new Category();
-        c2.setId(1);
-        c2.setName("bentengdi");
-        //c2.setName("名字长对应字段放不下,名字长对应字段放不下,名字长对应字段放不下,名字长对应字段放不下,名字长对应字段放不下,名字长对应字段放不下,名字长对应字段放不下,名字长对应字段放不下,");
-        categoryMapper.add(c2);
+    public boolean deleteAll() {
+        boolean status = true;
+        try {
+            List<Category> cs = list();
+            for (Category c : cs) {
+                categoryMapper.delete(c.getId());
+            }
+            return status;
+        }catch (Exception e){
+            logger.error(e.getMessage(),e);
+            return false;
+        }
+    }
+    public boolean add(Category category) {
+        boolean status=true;
+        try{
+            categoryMapper.add(category);
+            return status;
+        }catch (Exception e){
+            logger.error(e.getMessage(),e);
+            return false;
+        }
+    }
+    public boolean delete(Integer id){
+        boolean status=true;
+        try{
+            categoryMapper.delete(id);
+            return status;
+        }catch (Exception e){
+            logger.error(e.getMessage(),e);
+            return false;
+        }
     }
 
 }

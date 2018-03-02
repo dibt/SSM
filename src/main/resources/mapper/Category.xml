@@ -5,31 +5,30 @@
 
 <mapper namespace="com.di.mapper.CategoryMapper"><!--namespace需写CategoryMapper的完整类名-->
     <insert id="add" parameterType="Category" >
-        insert into category____ ( id,name ) values (#{id},#{name})
+        insert into category (id,name ) values (#{id},#{name})
     </insert>
 
     <delete id="delete" parameterType="Category" >
-        delete from category____ where id= #{id}
+        delete from category where id= #{id}
     </delete>
 
-    <select id="get" parameterType="_int" resultType="Category">
-        select * from   category____  where id= #{id}
+    <select id="get" parameterType="int" resultType="Category">
+        select * from  category where id= #{id}
     </select>
 
     <update id="update" parameterType="Category" >
-        update category____ set name=#{name} where id=#{id}
+        update category set name=#{name} where id=#{id}
     </update>
     <select id="listtop" resultType="Category">
-    select top (#{count}) * from category____
-    where id not in(select top (#{start}) id from category____ order by id) order by id;
+    select * from category limit #{start},#{count}
     </select>
 
     <select id="list" resultType="Category">
-        select  * from category____
+        select  * from category
     </select>
 
     <select id="total" resultType="int">
-        select count(*) from   category____
+        select count(*) from   category
     </select>
 
 </mapper>
