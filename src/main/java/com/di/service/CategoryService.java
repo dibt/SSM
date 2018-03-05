@@ -5,8 +5,6 @@ import com.di.pojo.Category;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +22,7 @@ public class CategoryService {
             List<Category> list =categoryMapper.list();
             return  list;
         }catch(Exception e) {
-            logger.error(e.getMessage(),e);
+            logger.error("get Category list error:",e);
             return new ArrayList<>();
         }
     }
@@ -35,11 +33,10 @@ public class CategoryService {
             total=categoryMapper.total();
             return total;
         }catch (Exception e){
-            logger.error(e.getMessage(),e);
+            logger.error("get Category total error:",e);
             return total;
         }
     }
-@Transactional(rollbackFor = Exception.class)
     public void deleteAll() throws Exception{
             List<Category> cs = list();
             for (Category c : cs) {
@@ -52,7 +49,7 @@ public class CategoryService {
             categoryMapper.add(category);
             return status;
         }catch (Exception e){
-            logger.error(e.getMessage(),e);
+            logger.error("add Category error:",e);
             return false;
         }
     }
@@ -62,7 +59,7 @@ public class CategoryService {
             categoryMapper.delete(id);
             return status;
         }catch (Exception e){
-            logger.error(e.getMessage(),e);
+            logger.error("delete Category error:",e);
             return false;
         }
     }
@@ -73,7 +70,7 @@ public class CategoryService {
             categoryMapper.update(category);
             return status;
         }catch (Exception e){
-            logger.error(e.getMessage(),e);
+            logger.error("update Category error:",e);
             return false;
         }
     }
@@ -83,7 +80,7 @@ public class CategoryService {
             Category category=categoryMapper.get(id);
             return category;
         }catch (Exception e){
-            logger.error(e.getMessage(),e);
+            logger.error("get Category error:",e);
             return null;
         }
     }

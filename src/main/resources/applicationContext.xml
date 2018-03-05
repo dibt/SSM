@@ -60,11 +60,12 @@
 
   <tx:advice id="txadvice" transaction-manager="transactionManager">
     <tx:attributes>
-      <tx:method name="add*" propagation="REQUIRED" rollback-for="Exception" />
-      <tx:method name="del*" propagation="REQUIRED" rollback-for="Exception"/>
-      <tx:method name="edit*" propagation="REQUIRED" rollback-for="Exception" />
-      <tx:method name="update*" propagation="REQUIRED" rollback-for="Exception"/>
-      <tx:method name="list*" propagation="REQUIRED" rollback-for="Exception"/>
+      <!--<tx:method name="add*" propagation="REQUIRED" rollback-for="Exception" />-->
+      <!--<tx:method name="del*" propagation="REQUIRED" rollback-for="Exception"/>-->
+      <!--<tx:method name="edit*" propagation="REQUIRED" rollback-for="Exception" />-->
+      <!--<tx:method name="update*" propagation="REQUIRED" rollback-for="Exception"/>-->
+      <!--<tx:method name="list*" propagation="REQUIRED" rollback-for="Exception"/>-->
+      <tx:method name="deleteall" propagation="REQUIRED" rollback-for="Exception"/>
     </tx:attributes>
   </tx:advice>
 

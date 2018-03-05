@@ -75,7 +75,7 @@ public class CategoryController extends BaseController{
         try{
             categoryService.deleteAll();
         }catch (Exception e){
-            logger.error(e.getMessage(),e);
+            logger.error("execution deleteall error:",e);
             return renderErrorDate(response, ErrorCode.CODE_SERVER_ERROR,"internal server error");
         }
             return renderErrorDate(response, ErrorCode.CODE_OK,ErrorCode.SUCCESS_KEY);
