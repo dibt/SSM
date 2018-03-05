@@ -3,13 +3,12 @@ package com.di.controller;
 import com.di.global.ErrorCode;
 import com.di.pojo.Category;
 import com.di.service.CategoryService;
-import com.di.util.Page;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +21,7 @@ import java.util.*;
 @Controller
 @RequestMapping("category")
 public class CategoryController extends BaseController{
+    private static final Logger logger =Logger.getLogger(CategoryController.class);
     @Resource(name = "categoryService",type =CategoryService.class )
     private CategoryService categoryService;
     @RequestMapping("list")
@@ -72,14 +72,48 @@ public class CategoryController extends BaseController{
     @RequestMapping("deleteall")
     @ResponseBody
     public Map<String,Object> deleteAll(HttpServletRequest request, HttpServletResponse response){
+        try{
+            categoryService.deleteAll();
+        }catch (Exception e){
+            logger.error(e.getMessage(),e);
+            return renderErrorDate(response, ErrorCode.CODE_SERVER_ERROR,"internal server error");
+        }
+            return renderErrorDate(response, ErrorCode.CODE_OK,ErrorCode.SUCCESS_KEY);
+    }
+
+    @RequestMapping(value = "edit",method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String,Object> edit(HttpServletRequest request, HttpServletResponse response,
+                                   @RequestParam(value = "id") String id,
+                                   @RequestParam(value = "name") String name){
+        if(!stringToInteger(id)){
+            return renderErrorDate(response,ErrorCode.CODE_REQ_PARAM_ERROR,"invalid params");
+        }
         boolean status;
-        status=categoryService.deleteAll();
+        Category category =new Category(Integer.parseInt(id),name);
+        status=categoryService.edit(category);
         if(!status){
             return renderErrorDate(response, ErrorCode.CODE_SERVER_ERROR,"internal server error");
         }else{
             return renderErrorDate(response, ErrorCode.CODE_OK,ErrorCode.SUCCESS_KEY);
         }
     }
+
+    @RequestMapping(value = "get")
+    @ResponseBody
+    public Map<String,Object> edit(HttpServletRequest request, HttpServletResponse response,
+                                   @RequestParam(value = "id") String id){
+        if(!stringToInteger(id)){
+            return renderErrorDate(response,ErrorCode.CODE_REQ_PARAM_ERROR,"invalid params");
+        }
+        Category category=categoryService.get(Integer.parseInt(id));
+        if(category == null){
+            return renderErrorDate(response, ErrorCode.CODE_SERVER_ERROR,"internal server error");
+        }else{
+            return renderDate(response,category);
+        }
+    }
+
     @RequestMapping("total")
     @ResponseBody
     public Map<String,Object> total(HttpServletRequest request, HttpServletResponse response){

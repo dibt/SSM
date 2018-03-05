@@ -24,7 +24,7 @@ public class SSMTest {
     CategoryService categoryService;
     @Test
     public void testList() {
-            categoryService.deleteAll();
+            //categoryService.deleteAll();
             //categoryService.addTwo();
         Page p = new Page();
         p.setStart(2);

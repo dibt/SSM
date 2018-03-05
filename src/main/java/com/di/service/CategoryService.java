@@ -2,7 +2,6 @@ package com.di.service;
 
 import com.di.mapper.CategoryMapper;
 import com.di.pojo.Category;
-import com.di.util.Page;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,10 +28,6 @@ public class CategoryService {
             return new ArrayList<>();
         }
     }
-    public List<Category> list(Page page) {
-        // TODO Auto-generated method stub
-        return categoryMapper.list(page);
-    }
 
     public int total() {
         Integer total = null;
@@ -44,19 +39,12 @@ public class CategoryService {
             return total;
         }
     }
-
-    public boolean deleteAll() {
-        boolean status = true;
-        try {
+@Transactional(rollbackFor = Exception.class)
+    public void deleteAll() throws Exception{
             List<Category> cs = list();
             for (Category c : cs) {
                 categoryMapper.delete(c.getId());
             }
-            return status;
-        }catch (Exception e){
-            logger.error(e.getMessage(),e);
-            return false;
-        }
     }
     public boolean add(Category category) {
         boolean status=true;
@@ -76,6 +64,27 @@ public class CategoryService {
         }catch (Exception e){
             logger.error(e.getMessage(),e);
             return false;
+        }
+    }
+
+    public boolean edit(Category category){
+        boolean status=true;
+        try{
+            categoryMapper.update(category);
+            return status;
+        }catch (Exception e){
+            logger.error(e.getMessage(),e);
+            return false;
+        }
+    }
+
+    public Category get(Integer id){
+        try{
+            Category category=categoryMapper.get(id);
+            return category;
+        }catch (Exception e){
+            logger.error(e.getMessage(),e);
+            return null;
         }
     }
 

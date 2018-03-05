@@ -27,8 +27,8 @@
   <context:annotation-config />
   <context:component-scan base-package="com.di.service" />
 
+  <context:property-placeholder location="classpath:jdbc.properties"/>
   <!--2. 配置SqlServer数据源-->
-  <context:property-placeholder location="classpath:/develop/jdbc.properties"/>
   <bean id="SqlServerdataSource" class="org.apache.commons.dbcp.BasicDataSource">
     <property name="driverClassName" value="${jdbc.sqlserver.driver}"></property>
     <property name="url" value="${jdbc.sqlserver.url}"></property>
