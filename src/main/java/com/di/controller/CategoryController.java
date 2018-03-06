@@ -4,6 +4,7 @@ import com.di.global.ErrorCode;
 import com.di.pojo.Category;
 import com.di.service.CategoryService;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -122,6 +123,24 @@ public class CategoryController extends BaseController{
             return renderErrorDate(response, ErrorCode.CODE_SERVER_ERROR,"internal server error");
         }else{
             return renderDate(response, total);
+        }
+    }
+
+    @RequestMapping(value = "page")
+    @ResponseBody
+    public Map<String,Object> page(HttpServletRequest request, HttpServletResponse response,
+                                   @RequestParam(value = "start") String start,
+                                   @RequestParam(value = "count",defaultValue = "10",required = false )String count){
+        if(!stringToInteger(start,count)){
+            return renderErrorDate(response,ErrorCode.CODE_REQ_PARAM_ERROR,"invalid params");
+        }
+        List<Category> list=categoryService.page(Integer.parseInt(start),Integer.parseInt(count));
+        if(list == null){
+            return renderErrorDate(response, ErrorCode.CODE_SERVER_ERROR,"internal server error");
+        }else if(list.size() ==0){
+            return renderErrorDate(response,ErrorCode.CODE_EMPTY_RESULT,"result is empty");
+        }else{
+            return renderDate(response,list);
         }
     }
 }

@@ -2,6 +2,8 @@ package com.di.service;
 
 import com.di.mapper.CategoryMapper;
 import com.di.pojo.Category;
+import com.di.util.Page;
+import com.di.util.PageUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -81,6 +83,19 @@ public class CategoryService {
             return category;
         }catch (Exception e){
             logger.error("get Category error:",e);
+            return null;
+        }
+    }
+
+    public List<Category> page(Integer start,Integer count){
+        Page page=new Page();
+        page.setStart(start);
+        page.setCount(count);
+        try{
+            List<Category> list=categoryMapper.listpage(page);
+            return list;
+        }catch (Exception e){
+            logger.error("get Category pagelist error:",e);
             return null;
         }
     }

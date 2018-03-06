@@ -2,6 +2,7 @@ package com.di.mapper;
 
 import com.di.pojo.Category;
 import com.di.util.Page;
+import com.di.util.PageUtil;
 
 import java.util.List;
 
@@ -21,9 +22,9 @@ public interface CategoryMapper {
 
     public List<Category> list(Page page);
 
-    public int count();
+    public List<Category> listpage(Page page);
 
-    public List<Category> listtop(Page page);
+    public int count();
 
     public int total();
 }

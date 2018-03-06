@@ -19,7 +19,8 @@
     <update id="update" parameterType="Category">
         update category set name=#{name} where id=#{id}
     </update>
-    <select id="listtop" resultType="Category">
+
+    <select id="listpage" resultType="Category">
     select * from category limit #{start},#{count}
     </select>
 
