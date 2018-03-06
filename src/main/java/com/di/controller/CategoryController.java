@@ -4,7 +4,6 @@ import com.di.global.ErrorCode;
 import com.di.pojo.Category;
 import com.di.service.CategoryService;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

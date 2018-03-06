@@ -3,7 +3,6 @@ package com.di.service;
 import com.di.mapper.CategoryMapper;
 import com.di.pojo.Category;
 import com.di.util.Page;
-import com.di.util.PageUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

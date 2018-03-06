@@ -4,9 +4,9 @@ package com.di.util;
  * Created by bentengdi on 2017/11/17.
  */
 public class Page {
-    int start=0;
-    int count = 5;
-    int last = 0;
+    private int start=0;//从当前记录开始显示
+    private int count = 5;//每页显式多少条记录
+    private int last = 0;
     public int getStart() {
         return start;
     }
