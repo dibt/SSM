@@ -2,13 +2,11 @@ package com.di.controller;
 
 import com.di.global.ErrorCode;
 import com.di.pojo.Category;
-import com.di.service.CategoryService;
+import com.di.service.ICategoryService;
+import com.di.service.impl.CategoryServiceImpl;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -22,8 +20,9 @@ import java.util.*;
 @RequestMapping("category")
 public class CategoryController extends BaseController{
     private static final Logger logger =Logger.getLogger(CategoryController.class);
-    @Resource(name = "categoryService",type =CategoryService.class )
-    private CategoryService categoryService;
+    @Resource(name = "categoryService",type = CategoryServiceImpl.class)
+    //@Autowired
+    private ICategoryService categoryService;
     @RequestMapping("list")
     @ResponseBody
     public Map<String,Object> listCategory(HttpServletRequest request, HttpServletResponse response){
@@ -53,10 +52,10 @@ public class CategoryController extends BaseController{
         }
     }
 
-    @RequestMapping("delete")
+    @RequestMapping("delete/{id}")
     @ResponseBody
     public Map<String,Object> delete(HttpServletRequest request, HttpServletResponse response,
-                                  @RequestParam(name = "id") String id){
+                                  @PathVariable(name = "id") String id){
         if(!stringToInteger(id)){
             return renderErrorDate(response,ErrorCode.CODE_REQ_PARAM_ERROR,"invalid params");
         }
@@ -68,7 +67,6 @@ public class CategoryController extends BaseController{
             return renderErrorDate(response, ErrorCode.CODE_OK,ErrorCode.SUCCESS_KEY);
         }
     }
-
     @RequestMapping("deleteall")
     @ResponseBody
     public Map<String,Object> deleteAll(HttpServletRequest request, HttpServletResponse response){
@@ -142,4 +140,5 @@ public class CategoryController extends BaseController{
             return renderDate(response,list);
         }
     }
+
 }

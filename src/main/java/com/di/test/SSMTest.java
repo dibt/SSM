@@ -2,7 +2,7 @@ package com.di.test;
 
 import com.di.mapper.CategoryMapper;
 import com.di.pojo.Category;
-import com.di.service.CategoryService;
+import com.di.service.impl.CategoryServiceImpl;
 import com.di.util.Page;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,7 +21,7 @@ public class SSMTest {
     @Autowired
     CategoryMapper categoryMapper;
     @Autowired
-    CategoryService categoryService;
+    CategoryServiceImpl categoryService;
     @Test
     public void testList() {
             //categoryService.deleteAll();

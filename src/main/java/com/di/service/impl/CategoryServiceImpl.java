@@ -1,7 +1,8 @@
-package com.di.service;
+package com.di.service.impl;
 
 import com.di.mapper.CategoryMapper;
 import com.di.pojo.Category;
+import com.di.service.ICategoryService;
 import com.di.util.Page;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import java.util.List;
  * Created by bentengdi on 2017/11/17.
  */
 @Service
-public class CategoryService {
+public class CategoryServiceImpl implements ICategoryService{
     private static final Logger logger = Logger.getLogger(CategoryMapper.class);
     @Autowired
     CategoryMapper categoryMapper;
