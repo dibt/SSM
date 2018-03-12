@@ -22,69 +22,65 @@
        xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
                             http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+    <!--1. 通过注解，将Service的生命周期纳入Spring的管理-->
+    <context:component-scan base-package="com.di.service"/>
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+    <!--2. 配置SqlServer数据源-->
+    <bean id="SqlServerdataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="${jdbc.sqlserver.driver}"></property>
+        <property name="url" value="${jdbc.sqlserver.url}"></property>
+        <property name="username" value="${jdbc.sqlserver.username}"></property>
+        <property name="password" value="${jdbc.sqlserver.password}"></property>
+    </bean>
+    <!-- 配置mysql数据源-->
+    <bean id="mysqldateSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${jdbc.mysql.driver}"></property>
+        <property name="url" value="${jdbc.mysql.url}"></property>
+        <property name="username" value="${jdbc.mysql.username}"></property>
+        <property name="password" value="${jdbc.mysql.password}"></property>
+    </bean>
 
-  <!--1. 通过注解，将Service的生命周期纳入Spring的管理-->
-  <context:component-scan base-package="com.di.service" />
+    <!--3. 扫描存放SQL语句的*.xml-->
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="typeAliasesPackage" value="com.di.pojo"/>
+        <property name="dataSource" ref="mysqldateSource"/>
+        <property name="mapperLocations" value="classpath:mapper/*.xml"/>
+    </bean>
+    <!--4. 扫描Mapper，并将其生命周期纳入Spring的管理-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.di.dao"/>
+    </bean>
 
-  <context:property-placeholder location="classpath:jdbc.properties"/>
-  <!--2. 配置SqlServer数据源-->
-  <bean id="SqlServerdataSource" class="org.apache.commons.dbcp.BasicDataSource">
-    <property name="driverClassName" value="${jdbc.sqlserver.driver}"></property>
-    <property name="url" value="${jdbc.sqlserver.url}"></property>
-    <property name="username" value="${jdbc.sqlserver.username}"></property>
-    <property name="password" value="${jdbc.sqlserver.password}"></property>
-  </bean>
-  <!-- 配置mysql数据源-->
-  <bean id="mysqldateSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-    <property name="driverClassName" value="${jdbc.mysql.driver}"></property>
-    <property name="url" value="${jdbc.mysql.url}"></property>
-    <property name="username" value="${jdbc.mysql.username}"></property>
-    <property name="password" value="${jdbc.mysql.password}"></property>
-  </bean>
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="mysqldateSource"/>
+    </bean>
 
-  <!--3. 扫描存放SQL语句的*.xml-->
-  <bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
-    <property name="typeAliasesPackage" value="com.di.pojo" />
-    <property name="dataSource" ref="mysqldateSource"/>
-    <property name="mapperLocations" value="classpath:mapper/*.xml"/>
-  </bean>
-  <!--4. 扫描Mapper，并将其生命周期纳入Spring的管理-->
-  <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-    <property name="basePackage" value="com.di.mapper"/>
-  </bean>
+    <tx:advice id="txadvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <!--<tx:method name="add*" propagation="REQUIRED" rollback-for="Exception" />-->
+            <!--<tx:method name="del*" propagation="REQUIRED" rollback-for="Exception"/>-->
+            <!--<tx:method name="edit*" propagation="REQUIRED" rollback-for="Exception" />-->
+            <!--<tx:method name="update*" propagation="REQUIRED" rollback-for="Exception"/>-->
+            <!--<tx:method name="list*" propagation="REQUIRED" rollback-for="Exception"/>-->
+            <tx:method name="deleteall" propagation="REQUIRED" rollback-for="Exception"/>
+        </tx:attributes>
+    </tx:advice>
 
-  <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-    <property name="dataSource" ref="mysqldateSource" />
-  </bean>
+    <aop:config>
+        <aop:pointcut id="serviceMethod" expression="execution(* com.di.service.*.*(..))"/>
+        <aop:advisor pointcut-ref="serviceMethod" advice-ref="txadvice"/>
+    </aop:config>
 
-  <tx:advice id="txadvice" transaction-manager="transactionManager">
-    <tx:attributes>
-      <!--<tx:method name="add*" propagation="REQUIRED" rollback-for="Exception" />-->
-      <!--<tx:method name="del*" propagation="REQUIRED" rollback-for="Exception"/>-->
-      <!--<tx:method name="edit*" propagation="REQUIRED" rollback-for="Exception" />-->
-      <!--<tx:method name="update*" propagation="REQUIRED" rollback-for="Exception"/>-->
-      <!--<tx:method name="list*" propagation="REQUIRED" rollback-for="Exception"/>-->
-      <tx:method name="deleteall" propagation="REQUIRED" rollback-for="Exception"/>
-    </tx:attributes>
-  </tx:advice>
-
-  <aop:config>
-    <aop:pointcut id="serviceMethod" expression="execution(* com.di.service.*.*(..))"/>
-    <aop:advisor pointcut-ref="serviceMethod" advice-ref="txadvice"/>
-  </aop:config>
-
-  <bean id="txBeanNameProxyCreator" class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
-    <property name="interceptorNames">
-      <list>
-        <value>txInterceptor</value>
-      </list>
-    </property>
-    <property name="beanNames">
-      <list>
-        <value>*Service</value>
-      </list>
-    </property>
-  </bean>
-
-
+    <bean id="txBeanNameProxyCreator" class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+        <property name="interceptorNames">
+            <list>
+                <value>txInterceptor</value>
+            </list>
+        </property>
+        <property name="beanNames">
+            <list>
+                <value>*Service</value>
+            </list>
+        </property>
+    </bean>
 </beans>

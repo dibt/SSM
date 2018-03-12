@@ -5,6 +5,7 @@ import com.di.pojo.Category;
 import com.di.service.ICategoryService;
 import com.di.service.impl.CategoryServiceImpl;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,8 +21,8 @@ import java.util.*;
 @RequestMapping("category")
 public class CategoryController extends BaseController{
     private static final Logger logger =Logger.getLogger(CategoryController.class);
-    @Resource(name = "categoryService",type = CategoryServiceImpl.class)
-    //@Autowired
+    //@Resource(name = "categoryService",type = CategoryServiceImpl.class)
+    @Autowired
     private ICategoryService categoryService;
     @RequestMapping("list")
     @ResponseBody

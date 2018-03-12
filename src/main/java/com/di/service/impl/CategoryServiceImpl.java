@@ -1,6 +1,6 @@
 package com.di.service.impl;
 
-import com.di.mapper.CategoryMapper;
+import com.di.dao.ICategoryDao;
 import com.di.pojo.Category;
 import com.di.service.ICategoryService;
 import com.di.util.Page;
@@ -16,9 +16,9 @@ import java.util.List;
  */
 @Service
 public class CategoryServiceImpl implements ICategoryService{
-    private static final Logger logger = Logger.getLogger(CategoryMapper.class);
+    private static final Logger logger = Logger.getLogger(ICategoryDao.class);
     @Autowired
-    CategoryMapper categoryMapper;
+    ICategoryDao categoryMapper;
     public List<Category> list(){
         try {
             List<Category> list =categoryMapper.list();
