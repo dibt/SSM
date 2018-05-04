@@ -3,7 +3,7 @@ package com.di.global;
 /**
  * Created by bentengdi on 2018/3/1.
  */
-public class ErrorCode {
+public class Code {
     public static String CODE_KEY = "code";
     public static String MSG_KEY = "message";
     public static String SUCCESS_KEY = "success";
