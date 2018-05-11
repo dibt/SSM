@@ -1,6 +1,6 @@
 package com.di.controller;
 
-import com.di.global.ErrorCode;
+import com.di.global.Code;
 import com.di.pojo.Category;
 import com.di.service.ICategoryService;
 import com.di.service.impl.CategoryServiceImpl;
@@ -29,7 +29,7 @@ public class CategoryController extends BaseController{
     public Map<String,Object> listCategory(HttpServletRequest request, HttpServletResponse response){
         List<Category> list=categoryService.list();
         if(list == null){
-            return renderErrorDate(response, ErrorCode.CODE_SERVER_ERROR,"internal server error");
+            return renderCodeMsg(response, Code.CODE_SERVER_ERROR,"internal server error");
         }else{
             return renderDate(response,list);
         }
@@ -41,15 +41,15 @@ public class CategoryController extends BaseController{
                                   @RequestParam(name = "id",required = true) String id,
                                   @RequestParam(name = "name") String name){
         if(!stringToInteger(id)){
-            return renderErrorDate(response,ErrorCode.CODE_REQ_PARAM_ERROR,"invalid params");
+            return renderCodeMsg(response,Code.CODE_REQ_PARAM_ERROR,"invalid params");
         }
         boolean status;
         Category category =new Category(Integer.parseInt(id),name);
         status=categoryService.add(category);
         if(!status){
-            return renderErrorDate(response, ErrorCode.CODE_SERVER_ERROR,"internal server error");
+            return renderCodeMsg(response, Code.CODE_SERVER_ERROR,"internal server error");
         }else{
-            return renderErrorDate(response, ErrorCode.CODE_OK,ErrorCode.SUCCESS_KEY);
+            return renderCodeMsg(response, Code.CODE_OK,Code.SUCCESS_KEY);
         }
     }
 
@@ -58,14 +58,14 @@ public class CategoryController extends BaseController{
     public Map<String,Object> delete(HttpServletRequest request, HttpServletResponse response,
                                   @PathVariable(name = "id") String id){
         if(!stringToInteger(id)){
-            return renderErrorDate(response,ErrorCode.CODE_REQ_PARAM_ERROR,"invalid params");
+            return renderCodeMsg(response,Code.CODE_REQ_PARAM_ERROR,"invalid params");
         }
         boolean status;
         status=categoryService.delete(Integer.parseInt(id));
         if(!status){
-            return renderErrorDate(response, ErrorCode.CODE_SERVER_ERROR,"internal server error");
+            return renderCodeMsg(response, Code.CODE_SERVER_ERROR,"internal server error");
         }else{
-            return renderErrorDate(response, ErrorCode.CODE_OK,ErrorCode.SUCCESS_KEY);
+            return renderCodeMsg(response, Code.CODE_OK,Code.SUCCESS_KEY);
         }
     }
     @RequestMapping("deleteall")
@@ -75,9 +75,9 @@ public class CategoryController extends BaseController{
             categoryService.deleteAll();
         }catch (Exception e){
             logger.error("execution deleteall error:",e);
-            return renderErrorDate(response, ErrorCode.CODE_SERVER_ERROR,"internal server error");
+            return renderCodeMsg(response, Code.CODE_SERVER_ERROR,"internal server error");
         }
-            return renderErrorDate(response, ErrorCode.CODE_OK,ErrorCode.SUCCESS_KEY);
+            return renderCodeMsg(response, Code.CODE_OK,Code.SUCCESS_KEY);
     }
 
     @RequestMapping(value = "edit",method = RequestMethod.POST)
@@ -86,15 +86,15 @@ public class CategoryController extends BaseController{
                                    @RequestParam(value = "id") String id,
                                    @RequestParam(value = "name") String name){
         if(!stringToInteger(id)){
-            return renderErrorDate(response,ErrorCode.CODE_REQ_PARAM_ERROR,"invalid params");
+            return renderCodeMsg(response,Code.CODE_REQ_PARAM_ERROR,"invalid params");
         }
         boolean status;
         Category category =new Category(Integer.parseInt(id),name);
         status=categoryService.edit(category);
         if(!status){
-            return renderErrorDate(response, ErrorCode.CODE_SERVER_ERROR,"internal server error");
+            return renderCodeMsg(response, Code.CODE_SERVER_ERROR,"internal server error");
         }else{
-            return renderErrorDate(response, ErrorCode.CODE_OK,ErrorCode.SUCCESS_KEY);
+            return renderCodeMsg(response, Code.CODE_OK,Code.SUCCESS_KEY);
         }
     }
 
@@ -103,11 +103,11 @@ public class CategoryController extends BaseController{
     public Map<String,Object> edit(HttpServletRequest request, HttpServletResponse response,
                                    @RequestParam(value = "id") String id){
         if(!stringToInteger(id)){
-            return renderErrorDate(response,ErrorCode.CODE_REQ_PARAM_ERROR,"invalid params");
+            return renderCodeMsg(response,Code.CODE_REQ_PARAM_ERROR,"invalid params");
         }
         Category category=categoryService.get(Integer.parseInt(id));
         if(category == null){
-            return renderErrorDate(response, ErrorCode.CODE_SERVER_ERROR,"internal server error");
+            return renderCodeMsg(response, Code.CODE_SERVER_ERROR,"internal server error");
         }else{
             return renderDate(response,category);
         }
@@ -118,7 +118,7 @@ public class CategoryController extends BaseController{
     public Map<String,Object> total(HttpServletRequest request, HttpServletResponse response){
         Integer total=categoryService.total();
         if(total == null){
-            return renderErrorDate(response, ErrorCode.CODE_SERVER_ERROR,"internal server error");
+            return renderCodeMsg(response, Code.CODE_SERVER_ERROR,"internal server error");
         }else{
             return renderDate(response, total);
         }
@@ -130,13 +130,13 @@ public class CategoryController extends BaseController{
                                    @RequestParam(value = "start") String start,
                                    @RequestParam(value = "count",defaultValue = "10",required = false )String count){
         if(!stringToInteger(start,count)){
-            return renderErrorDate(response,ErrorCode.CODE_REQ_PARAM_ERROR,"invalid params");
+            return renderCodeMsg(response,Code.CODE_REQ_PARAM_ERROR,"invalid params");
         }
         List<Category> list=categoryService.page(Integer.parseInt(start),Integer.parseInt(count));
         if(list == null){
-            return renderErrorDate(response, ErrorCode.CODE_SERVER_ERROR,"internal server error");
+            return renderCodeMsg(response, Code.CODE_SERVER_ERROR,"internal server error");
         }else if(list.size() ==0){
-            return renderErrorDate(response,ErrorCode.CODE_EMPTY_RESULT,"result is empty");
+            return renderCodeMsg(response,Code.CODE_EMPTY_RESULT,"result is empty");
         }else{
             return renderDate(response,list);
         }

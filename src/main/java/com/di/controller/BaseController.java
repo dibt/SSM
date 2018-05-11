@@ -12,7 +12,7 @@ import java.util.Map;
 public class BaseController {
     protected Map<String,Object> renderDate(HttpServletResponse response,Object result){
         response.setContentType("application/json;charset=UTF-8");
-        Map<String,Object> map=new HashMap<>();
+        Map<String,Object> map=new HashMap<String,Object>();
         map.put(Code.CODE_KEY,Code.CODE_OK);
         map.put(Code.MSG_KEY,Code.SUCCESS_KEY);
         map.put(Code.TIMETAMP_KEY,System.currentTimeMillis());
@@ -22,9 +22,9 @@ public class BaseController {
         return map;
     }
 
-    protected Map<String,Object> renderErrorDate(HttpServletResponse response,Integer errorcode,String message){
+    protected Map<String,Object> renderCodeMsg(HttpServletResponse response,Integer errorcode,String message){
         response.setContentType("application/json;charset=UTF-8");
-        Map<String,Object> map=new HashMap<>();
+        Map<String,Object> map=new HashMap<String,Object>();
         map.put(Code.CODE_KEY,errorcode);
         map.put(Code.MSG_KEY,message);
         map.put(Code.TIMETAMP_KEY,System.currentTimeMillis());

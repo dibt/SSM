@@ -1,0 +1,216 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+/**
+ *
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+-->
+<configuration>
+    <property>
+        <name>hbase.rootdir</name>
+        <value>hdfs://biphdfs/biphbase</value>
+        <description>The directory shared by RegionServers.</description>
+    </property>
+    <property>
+        <name>hbase.cluster.distributed</name>
+        <value>true</value>
+    </property>
+    <property>
+        <name>hbase.zookeeper.quorum</name>
+        <value>new-namenode,new-datanode1,new-datanode2</value>
+    </property>
+    <property>
+        <name>zookeeper.znode.parent</name>
+        <value>/Apps/biphbase</value>
+    </property>
+    <property>
+        <name>hbase.coprocessor.abortonerror</name>
+        <value>false</value>
+    </property>
+    <property>
+        <name>hbase.security.authentication</name>
+        <value>simple</value>
+    </property>
+    <property>
+        <name>hbase.security.authorization</name>
+        <value>true</value>
+    </property>
+    <property>
+        <name>hbase.coprocessor.master.classes</name>
+        <value>org.apache.hadoop.hbase.security.access.AccessController</value>
+    </property>
+    <property>
+        <name>hbase.coprocessor.region.classes</name>
+        <value>org.apache.hadoop.hbase.security.access.AccessController</value>
+    </property>
+    <property>
+        <name>hbase.coprocessor.regionserver.classes</name>
+        <value>org.apache.hadoop.hbase.security.access.AccessController</value>
+    </property>
+    <property>
+        <name>hbase.replication</name>
+        <value>true</value>
+    </property>
+    <!--property>
+      <name>hbase.master.loadbalancer.class</name>
+      <value>org.apache.hadoop.hbase.master.balancer.SimpleLoadBalancer</value>
+    </property-->
+    <property>
+        <name>hbase.master.loadbalance.bytable</name>
+        <value>false</value>
+    </property>
+    <property>
+        <name>hbase.master.balancer.stochastic.maxMovePercent</name>
+        <value>0.05</value>
+    </property>
+    <!--<property>
+    <name>replication.source.nb.capacity</name>
+      <value>5000</value>
+      <description>主集群每次像备集群发送的entry最大的个数，推荐5000.可根据集群规模做出适当调整,slave集群服务器如果较多，可适当增大</description>
+    </property>
+    <property>
+      <name>replication.source.size.capacity</name>
+      <value>4194304</value>
+      <description>主集群每次像备集群发送的entry的包的最大值大小，不推荐过大</description>
+    </property>
+    <property>
+      <name>replication.source.ratio</name>
+      <value>1</value>
+      <description>主集群里使用slave服务器的百分比</description>
+    </property>
+    <property>
+      <name>hbase.regionserver.wal.enablecompression</name>
+      <value>false</value>
+      <description>主集群关闭hlog的压缩</description>
+    </property>
+    <property>
+      <name>replication.sleep.before.failover</name>
+      <value>5000</value>
+      <description>主集群在regionserver当机后几毫秒开始执行failover</description>
+    </property>-->
+    <property>
+        <name>hbase.coprocessor.user.region.classes</name>
+        <value>org.apache.hadoop.hbase.coprocessor.AggregateImplementation</value>
+    </property>
+    <property>
+        <name>hbase.defaults.for.version.skip</name>
+        <value>true</value>
+    </property>
+    <property>
+        <name>hbase.client.scanner.timeout.period</name>
+        <value>180000</value>
+    </property>
+
+    <property>
+        <name>hbase.hregion.memstore.mslab.enabled</name>
+        <value>true</value>
+    </property>
+
+    <property>
+        <name>hbase.hregion.majorcompaction</name>
+        <value>0</value>
+    </property>
+
+    <property>
+        <name>hbase.hregion.max.filesize</name>
+        <value>536870912000</value>
+    </property>
+
+    <property>
+        <name>hbase.hstore.compaction.max</name>
+        <value>20</value>
+    </property>
+
+    <property>
+        <name>hbase.hstore.compactionThreshold</name>
+        <value>5</value>
+    </property>
+
+    <property>
+        <name>hbase.server.compactchecker.interval.multiplier</name>
+        <value>100</value>
+    </property>
+
+    <property>
+        <name>hbase.regionserver.thread.compaction.large</name>
+        <value>5</value>
+    </property>
+
+    <property>
+        <name>hbase.regionserver.thread.compaction.small</name>
+        <value>10</value>
+    </property>
+
+    <property>
+        <name>hbase.regionserver.optionalcacheflushinterval</name>
+        <value>36000000</value>
+    </property>
+
+    <!-- fix1 20160816 start
+    <property>
+        <name>hbase.regionserver.handler.count</name>
+        <value>100</value>
+    </property>
+    <property>
+        <name>hbase.bucketcache.ioengine</name>
+        <value>offheap</value>
+    </property>
+    <property>
+      <name>hbase.bucketcache.size</name>
+      <value>16384</value>
+    </property>
+    <property>
+        <name>hfile.block.cache.size</name>
+        <value>0.25</value>
+      <description>lru-block-cache ratio in jvm_heap</description>
+    </property>
+    <property>
+        <name>hbase.regionserver.global.memstore.size</name>
+        <value>0.5</value>
+      <description>block new write,forced flush</description>
+    </property>
+    <property>
+        <name>hbase.hstore.blockingStoreFiles</name>
+        <value>15</value>
+      <description></description>
+    </property>
+    <property>
+        <name>hbase.thrift.minWorkerThreads</name>
+        <value>100</value>
+    </property>
+    <property>
+        <name>hbase.regionserver.thrift.framed.max_frame_size_in_mb</name>
+        <value>4</value>
+    </property>
+    <property>
+        <name>hbase.regionserver.thrift.framed</name>
+        <value>false</value>
+    </property>
+    -->
+    <!--property>
+        <name>hbase.regionserver.global.memstore.upperLimit</name>
+        <value>0.50</value>
+      <description>memstore flush ratio in jvm_heap</description>
+    </property>
+    <property>
+        <name>hbase.regionserver.global.memstore.lowerLimit</name>
+        <value>0.40</value>
+      <description>min memstore ratio in jvm_heap</description>
+    </property-->
+    <!-- fix1 20160816 end-->
+</configuration>
