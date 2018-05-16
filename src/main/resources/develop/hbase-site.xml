@@ -22,22 +22,28 @@
 -->
 <configuration>
     <property>
+        <!--这个目录是region server的共享目录，用来持久化HBase。-->
         <name>hbase.rootdir</name>
         <value>hdfs://biphdfs/biphbase</value>
         <description>The directory shared by RegionServers.</description>
     </property>
+    <!--HBase的运行模式。false是单机模式，true是分布式模式。-->
     <property>
         <name>hbase.cluster.distributed</name>
         <value>true</value>
     </property>
+    <!--Zookeeper集群的地址列表-->
     <property>
         <name>hbase.zookeeper.quorum</name>
         <value>new-namenode,new-datanode1,new-datanode2</value>
     </property>
+    <!--root znode的acl-->
     <property>
         <name>zookeeper.znode.parent</name>
         <value>/Apps/biphbase</value>
     </property>
+    <!--如果coprocessor加载失败或者初始化失败或者抛出Throwable对象，则主机退出。
+    设置为false会让系统继续运行，但是coprocessor的状态会不一致，所以一般debug时才会设置为false，默认是true；-->
     <property>
         <name>hbase.coprocessor.abortonerror</name>
         <value>false</value>
@@ -50,10 +56,14 @@
         <name>hbase.security.authorization</name>
         <value>true</value>
     </property>
+    <!--由HMaster进程加载的coprocessors，逗号分隔，全部实现org.apache.hadoop.hbase.coprocessor.MasterObserver，
+    同coprocessor类似，加入classpath及全限定名；-->
     <property>
         <name>hbase.coprocessor.master.classes</name>
         <value>org.apache.hadoop.hbase.security.access.AccessController</value>
     </property>
+    <!--逗号分隔的Coprocessores列表，会被加载到默认所有表上。在自己实现了一个Coprocessor后，
+    将其添加到Hbase的classpath并加入全限定名。也可以延迟加载，由HTableDescriptor指定；-->
     <property>
         <name>hbase.coprocessor.region.classes</name>
         <value>org.apache.hadoop.hbase.security.access.AccessController</value>

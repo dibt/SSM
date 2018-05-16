@@ -10,14 +10,19 @@
 	See accompanying LICENSE file. -->
 <!-- Put site-specific property overrides in this file. -->
 <configuration>
+	<!--HDFS 命名服务的逻辑名称,可用户自己定义,该名称将被基于 HDFS 的系统使用,比如 Hbase 等-->
 	<property>
 		<name>dfs.nameservices</name>
 		<value>biphdfs</value>
+		<description>Logical name for this new nameservice</description>
 	</property>
+	<!--某个命名服务下包含的 NameNode 列表,可为每个 NameNode 指定一个自定义的 ID 名称-->
 	<property>
 		<name>dfs.ha.namenodes.biphdfs</name>
 		<value>nn1,nn2</value>
+		<description>Unique identifiers for each NameNode in the nameservice </description>
 	</property>
+	<!--为每个 NameNode 设置 RPC 地址-->
 	<property>
 		<name>dfs.namenode.rpc-address.biphdfs.nn1</name>
 		<value>new-namenode:9000</value>
@@ -26,6 +31,14 @@
 		<name>dfs.namenode.rpc-address.biphdfs.nn2</name>
 		<value>new-datanode1:9000</value>
 	</property>
+	<!--是用来保存namenode中对HDFS metadata的信息的备份，并减少namenode重启的时间。
+	hadoop的默认配置中让snn进程默认运行在了namenode的那台机器上，但是这样的话，如果这台机器出错，宕机，
+	对恢复HDFS文件系统是很大的灾难，更好的方式是：将snn的进程配置在另外一台机器上运行。-->
+	<property>
+		<name>dfs.namenode.secondary.http-address</name>
+		<value>datanode-1.pplive.cn:50090</value>
+	</property>
+	<!--为每个 NameNode 设置对外的 HTTP 地址-->
 	<property>
 		<name>dfs.namenode.http-address.biphdfs.nn1</name>
 		<value>new-namenode:50070</value>
@@ -34,14 +47,21 @@
 		<name>dfs.namenode.http-address.biphdfs.nn2</name>
 		<value>new-datanode1:50070</value>
 	</property>
+	<!--设置一组journalNode的URI地址,active NameNode将edit log写入这些JournalNode,而standby NameNode读取这些edit log,
+	并作用在内存中的目录树中-->
 	<property>
 		<name>dfs.namenode.shared.edits.dir</name>
 		<value>qjournal://new-namenode:8485;new-datanode1:8485;new-datanode2:8485/biphdfs</value>
 	</property>
+	<!--设置客户端与 active NameNode 进行交互的 Java 实现类,DFS 客户端通过该类寻找当前的 active NameNode。
+	该类可由用户自己实现,默认实现为 ConfiguredFailoverProxyProvider-->
 	<property>
 		<name>dfs.client.failover.proxy.provider.biphdfs</name>
 		<value>org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider</value>
 	</property>
+	<!--一旦需要NameNode切换，使用ssh方式进行操作-->
+	<!--sshfence 通过 ssh 登录到前一个 active NameNode 并将其杀死。为了让该机制成功执行,
+	这可通过参数 dfs.ha.fencing.ssh.private-key-files 设置一个私钥文件。-->
 	<property>
 		<name>dfs.ha.fencing.methods</name>
 		<value>sshfence(pplive:2200)</value>
@@ -50,75 +70,79 @@
 		<name>dfs.ha.fencing.ssh.private-key-files</name>
 		<value>/home/pplive/.ssh/id_rsa</value>
 	</property>
+	<!--JournalNode 所在节点上的一个目录,用于存放 editlog 和其他状态信息。-->
 	<property>
 		<name>dfs.journalnode.edits.dir</name>
 		<value>/home/pplive/hard_disk/11</value>
 	</property>
+	<!--指定是否启动自动故障恢复，即当NameNode出故障时，是否自动切换到另一台NameNode-->
 	<property>
 		<name>dfs.ha.automatic-failover.enabled</name>
 		<value>true</value>
 	</property>
+	<!--指定DataNode存储block的副本数量-->
 	<property>
 		<name>dfs.replication</name>
 		<value>1</value>
 	</property>
+	<!--本地文件系统DFSnamenode存放name table(fsimage文件)的目录-->
+	<!--其中fsimage镜像文件包含了整个HDFS文件系统的所有目录和文件的indoe信息。对于文件来说包括了数据块描述信息、修改时间、访问时间等；
+	对于目录来说包括修改时间、访问权限控制信息(目录所属用户，所在组等)等。另外，edit文件主要是在NameNode已经启动情况下对HDFS进行的各种
+	更新操作进行记录，HDFS客户端执行所有的写操作都会被记录到edit文件中。-->
 	<property>
 		<name>dfs.namenode.name.dir</name>
 		<value>/home/pplive/hard_disk/0,/home/pplive/hard_disk/1</value>
 	</property>
+	<!--DFS data node存放块文件的本地文件系统目录，一个文件按块大小切分后，按顺序存放在配置多个目录下（目录不存在则忽略）；
+	这么做的目的是，可以将数据写多块硬盘，把这些位置分散在每个节点上的所有磁盘上可以实现磁盘 I/O 平衡，因此会显著改进磁盘 I/O 性能。-->
 	<property>
 		<name>dfs.datanode.data.dir</name>
 		<value>/home/pplive/hard_disk/0/hdfs,/home/pplive/hard_disk/1/hdfs,/home/pplive/hard_disk/2/hdfs,/home/pplive/hard_disk/3/hdfs,/home/pplive/hard_disk/4/hdfs,/home/pplive/hard_disk/5/hdfs,/home/pplive/hard_disk/6/hdfs,/home/pplive/hard_disk/7/hdfs,/home/pplive/hard_disk/8/hdfs,/home/pplive/hard_disk/9/hdfs,/home/pplive/hard_disk/10/hdfs,</value>
 	</property>
+	<!--HDFS权限认证，是否打开-->
 	<property>
-		<name>dfs.permissions</name>
+		<name>dfs.permissions.enabled</name>
 		<value>true</value>
 	</property>
+	<!--HDFS文件系统块大小；可以配置以m,g等后缀结尾的值  256m-->
 	<property>
 		<name>dfs.blocksize</name>
 		<value>134217728</value>
 	</property>
+	<!--每个存储卷保留用作其他用途( non dfs use）的磁盘大小；单位 bytes per volume-->
 	<property>
 		<name>dfs.datanode.du.reserved</name>
 		<value>10737418240</value>
 	</property>
+	<!--NN启动的服务线程数-->
 	<property>
 		<name>dfs.namenode.handler.count</name>
 		<value>35</value>
 		<description>The number of server threads for the namenode.</description>
 	</property>
+	<!--DN启动的服务线程数-->
 	<property>
 		<name>dfs.datanode.handler.count</name>
 		<value>7</value>
 	</property>
+	<!--相当于linux下的打开文件最大数量，文档中无此参数，当出现DataXceiver报错的时候，需要调大。默认256;-->
 	<property>
-		<name>dfs.datanode.max.xcievers</name>
+		<name>dfs.datanode.max.transfer.threads</name>
 		<value>8192</value>
 	</property>
+	<!-- IO超时,超时上限值以毫秒为单位。0表示无限制-->
 	<property>
 		<name>dfs.datanode.socket.write.timeout</name>
 		<value>0</value>
 	</property>
+	<!--允许每秒的带宽；为了防止balance过程抢占网络资源，不为Mapreduce作业或者数据输入预留资源-->
 	<property>
 		<name>dfs.datanode.balance.bandwidthPerSec</name>
 		<value>104857600</value>
-		<description>
-			Specifies the maximum amount of bandwidth that each
-			datanode
-			can utilize for the balancing purpose in term of
-			the number of
-			bytes per second.
-		</description>
 	</property>
+	<!--一个列表，列表中的hosts不允许连接namenode-->
 	<property>
 		<name>dfs.hosts.exclude</name>
 		<value>/usr/local/hadoop/etc/hadoop/dfs.hosts.exclude</value>
-		<description>Names a file that contains a list of hosts that are
-			not
-			permitted to connect to the namenode. The full pathname of the
-			file
-			must be specified. If the value is empty, no hosts are
-			excluded.
-		</description>
 	</property>
 </configuration>
