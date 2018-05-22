@@ -4,7 +4,8 @@ import com.di.dao.ICategoryDao;
 import com.di.pojo.Category;
 import com.di.service.ICategoryService;
 import com.di.util.Page;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,7 @@ import java.util.List;
  */
 @Service
 public class CategoryServiceImpl implements ICategoryService{
-    private static final Logger logger = Logger.getLogger(ICategoryDao.class);
+    private static final Logger logger = LoggerFactory.getLogger(CategoryServiceImpl.class);
     @Autowired
     ICategoryDao categoryMapper;
     public List<Category> list(){

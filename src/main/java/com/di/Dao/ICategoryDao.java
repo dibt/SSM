@@ -2,6 +2,7 @@ package com.di.dao;
 
 import com.di.pojo.Category;
 import com.di.util.Page;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 

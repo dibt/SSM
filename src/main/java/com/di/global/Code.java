@@ -8,7 +8,7 @@ public class Code {
     public static String MSG_KEY = "message";
     public static String SUCCESS_KEY = "success";
     public static String TIMETAMP_KEY ="ts";
-    public static String DATE_KEY="date";
+    public static String DATE_KEY="data";
 
     public static int CODE_OK = 0;
 

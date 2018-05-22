@@ -4,7 +4,8 @@ import com.di.global.Code;
 import com.di.pojo.Category;
 import com.di.service.ICategoryService;
 import com.di.service.impl.CategoryServiceImpl;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ import java.util.*;
 @Controller
 @RequestMapping("category")
 public class CategoryController extends BaseController{
-    private static final Logger logger =Logger.getLogger(CategoryController.class);
+    private static final Logger logger = LoggerFactory.getLogger(CategoryController.class);
     //@Resource(name = "categoryService",type = CategoryServiceImpl.class)
     @Autowired
     private ICategoryService categoryService;
@@ -129,6 +130,7 @@ public class CategoryController extends BaseController{
     public Map<String,Object> page(HttpServletRequest request, HttpServletResponse response,
                                    @RequestParam(value = "start") String start,
                                    @RequestParam(value = "count",defaultValue = "10",required = false )String count){
+
         if(!stringToInteger(start,count)){
             return renderCodeMsg(response,Code.CODE_REQ_PARAM_ERROR,"invalid params");
         }
