@@ -4,5 +4,6 @@
 Hbase API<br/>
 Redis API<br/>
 HttpClient调用接口<br/>
-
-<center><font color="#00dddd">***持续更新***</font></center>
+<br/>
+<br/>
+未完待续，持续更新
