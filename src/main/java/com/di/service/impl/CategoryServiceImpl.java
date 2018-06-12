@@ -8,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import sun.reflect.annotation.ExceptionProxy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,10 +42,17 @@ public class CategoryServiceImpl implements ICategoryService{
             return total;
         }
     }
-    public void deleteAll() throws Exception{
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteAll() throws RuntimeException{
             List<Category> cs = list();
+            //验证事务能够生效
+        int count = 0;
             for (Category c : cs) {
+                if(count == 1){
+                    throw new RuntimeException();
+                }
                 categoryMapper.delete(c.getId());
+                count++;
             }
     }
     public boolean add(Category category) {

@@ -23,6 +23,8 @@
         <property name="path" value="${com.di.path}"/>
     </bean>
 
+    <aop:aspectj-autoproxy/>
+
     <!--2. 配置SqlServer数据源-->
     <bean id="SqlServerdataSource" class="org.apache.commons.dbcp.BasicDataSource">
         <property name="driverClassName" value="${jdbc.sqlserver.driver}"></property>
@@ -50,36 +52,40 @@
     </bean>
 
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="mysqldateSource"/>
+    <property name="dataSource" ref="mysqldateSource"/>
     </bean>
+    <!-- 声明式事务配置 -->
+    <tx:annotation-driven transaction-manager="transactionManager" />
 
-    <tx:advice id="txadvice" transaction-manager="transactionManager">
-        <tx:attributes>
-            <!--<tx:method name="add*" propagation="REQUIRED" rollback-for="Exception" />-->
-            <!--<tx:method name="del*" propagation="REQUIRED" rollback-for="Exception"/>-->
-            <!--<tx:method name="edit*" propagation="REQUIRED" rollback-for="Exception" />-->
-            <!--<tx:method name="update*" propagation="REQUIRED" rollback-for="Exception"/>-->
-            <!--<tx:method name="list*" propagation="REQUIRED" rollback-for="Exception"/>-->
-            <tx:method name="deleteall" propagation="REQUIRED" rollback-for="Exception"/>
-        </tx:attributes>
-    </tx:advice>
+    <!--&lt;!&ndash;配置事务管理&ndash;&gt;-->
+    <!--<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">-->
+        <!--<property name="dataSource" ref="mysqldateSource"/>-->
+    <!--</bean>-->
 
-    <aop:config>
-        <aop:pointcut id="serviceMethod" expression="execution(* com.di.service.*.*(..))"/>
-        <aop:advisor pointcut-ref="serviceMethod" advice-ref="txadvice"/>
-    </aop:config>
+    <!--<tx:advice id="txAdvice" transaction-manager= "transactionManager">-->
+        <!--<tx:attributes>-->
+            <!--&lt;!&ndash; 为连接点指定事务属性 &ndash;&gt;-->
+            <!--<tx:method name="deleteAll" propagation="REQUIRED" rollback-for="java.lang.Exception"/>-->
+        <!--</tx:attributes>-->
+    <!--</tx:advice>-->
 
-    <bean id="txBeanNameProxyCreator" class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
-        <property name="interceptorNames">
-            <list>
-                <value>txInterceptor</value>
-            </list>
-        </property>
-        <property name="beanNames">
-            <list>
-                <value>*Service</value>
-            </list>
-        </property>
-    </bean>
+    <!--<aop:config>-->
+        <!--&lt;!&ndash; 切入点配置 &ndash;&gt;-->
+        <!--<aop:pointcut id="serviceMethodPoint" expression="execution(* com.di.service.*.*(..))"/>-->
+        <!--<aop:advisor advice-ref="txAdvice"  pointcut-ref="serviceMethodPoint" />-->
+    <!--</aop:config>-->
+
+    <!--<bean id="txBeanNameProxyCreator" class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">-->
+        <!--<property name="interceptorNames">-->
+            <!--<list>-->
+                <!--<value>txInterceptor</value>-->
+            <!--</list>-->
+        <!--</property>-->
+        <!--<property name="beanNames">-->
+            <!--<list>-->
+                <!--<value>*Service</value>-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
 
 </beans>
