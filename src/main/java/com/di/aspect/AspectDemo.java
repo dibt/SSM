@@ -13,7 +13,7 @@ public class AspectDemo {
      * @param joinPoint
      * 不需要参数时可以不提供
      */
-    @Before(value = "execution(* com.di.service.AspectDemoService.*(..))")
+    @Before(value = "execution(* com.di.service.impl.AspectServiceImpl.*(..))")
     public void before(JoinPoint joinPoint){
         System.out.println("before"+joinPoint.getSignature().getName());
     }
@@ -23,7 +23,7 @@ public class AspectDemo {
      * @return
      * @throws Throwable
      */
-    @Around(value = "execution(* com.di.service.AspectDemoService.method1(..))")
+    @Around(value = "execution(* com.di.service.impl.AspectServiceImpl.method1(..))")
     public Object around(ProceedingJoinPoint proceedingJoinPoint ) throws Throwable{
         //getSignature 获取切点的签名    proceed() 执行切点本来的业务
         System.out.println("around获取切点的签名" + proceedingJoinPoint.getSignature().getName());
@@ -35,7 +35,7 @@ public class AspectDemo {
      * 后置通知
      * @param returnVal,切点方法执行后的返回值
      */
-    @AfterReturning(value = "execution(* com.di.service.AspectDemoService.method2(..))",returning = "returnVal")
+    @AfterReturning(value = "execution(* com.di.service.impl.AspectServiceImpl.method2(..))",returning = "returnVal")
     public void afterReturn(Object returnVal){
         System.out.println("AfterReturning and "+returnVal);
     }
@@ -43,7 +43,7 @@ public class AspectDemo {
      * 异常通知
      * @param throwable
      */
-    @AfterThrowing(value="execution(* com.di.service.AspectDemoService.method3(..))",throwing = "throwable")
+    @AfterThrowing(value="execution(* com.di.service.impl.AspectServiceImpl.method3(..))",throwing = "throwable")
     public void afterThrowable(Throwable throwable){
         System.out.println("AfterThrowing--出现异常:msg="+throwable.getMessage());
     }
@@ -52,7 +52,7 @@ public class AspectDemo {
      * 最终通知
      * 无论什么情况下都会执行的方法
      */
-    @After(value = "execution(* com.di.service.AspectDemoService.*(..))")
+    @After(value = "execution(* com.di.service.impl.AspectServiceImpl.*(..))")
     public void after(){
         System.out.println("after");
     }

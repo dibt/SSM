@@ -1,11 +1,9 @@
 package com.di;
 
-import com.di.service.AspectDemoService;
+import com.di.service.impl.AspectServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -13,11 +11,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration("classpath:applicationContext.xml")
 public class AspectServiceTest {
     @Autowired
-     AspectDemoService aspectDemoService;
+    AspectServiceImpl aspectService;
     @Test
     public void test() throws Exception{
-       //aspectDemoService.method1();
-        //aspectDemoService.method2();
-        aspectDemoService.method3();
+       //aspectService.method1();
+        //aspectService.method2();
+        aspectService.method3();
     }
 }

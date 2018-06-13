@@ -9,3 +9,5 @@ target
 *.rar
 .settings
 *.iml
+*.iws
+*.ipr

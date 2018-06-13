@@ -1,9 +1,10 @@
-package com.di.service;
+package com.di.service.impl;
 
+import com.di.service.IAspectService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AspectDemoService {
+public class AspectServiceImpl implements IAspectService {
     public void method1(){
         System.out.println("this is AspectDemoService-method1");
     }

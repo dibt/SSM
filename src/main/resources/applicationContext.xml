@@ -50,7 +50,7 @@
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.di.dao"/>
     </bean>
-
+    <!--配置事务管理-->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
     <property name="dataSource" ref="mysqldateSource"/>
     </bean>
