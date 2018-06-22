@@ -16,6 +16,16 @@
     <mvc:annotation-driven />
     <!--3. 静态页面，如html,css,js,images可以访问-->
     <mvc:default-servlet-handler />
+    <mvc:interceptors>
+        <!-- 对所有请求都拦截，公共拦截器可以有多个 -->
+        <bean name="baseInterceptor" class="com.di.interceptor.BaseInterceptor"></bean>
+        <!--<bean name="appointInterceptor" class="com.di.interceptor.AppointInterceptor"></bean>-->
+        <!-- 特定请求的拦截器只能有一个 -->
+        <mvc:interceptor>
+            <mvc:mapping path="/category/list"/>
+            <bean class="com.di.interceptor.AppointInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
 
     <!-- 视图定位 -->
     <!--视图定位到/WEB/INF/view 这个目录下-->
