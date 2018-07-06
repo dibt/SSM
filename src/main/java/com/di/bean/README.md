@@ -31,6 +31,10 @@ postProcessAfterInitialization:在bean初始化之后执行
 6. Spring容器关闭过程
     1. 调用DisposableBean接口的destroy();
     2. 调用定制的destroy-method方法;
+7. 结合源码  
+Spring容器在实例化时会加载容器内所有非延迟加载的单例类型Bean  
+如果bean定义中的设置了lazyinit（默认为false，即关闭懒加载）属性或者使用了@Lazy注解，只有在第一次getBean时才会触发实例化  
+    * 懒加载---就是在spring容器启动的是先不把所有的bean都加载到spring的容器中去，而是在当需要用的时候，才把这个对象实例化到容器中。
 
 
 

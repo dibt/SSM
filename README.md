@@ -7,6 +7,8 @@ HttpClient实现接口调用
 Spring AOP
 Spring拦截器、过滤器  
 执行顺序为：过滤前-拦截前—程序执行-拦截后-过滤后  
-Bean的初始化和销毁
+[Bean的初始化和销毁][bean]
+
+[bean]: https://github.com/dibt/SSM/tree/master/src/main/java/com/di/bean
 
 未完待续，持续更新

@@ -3,6 +3,7 @@ package com.di.bean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 
 @Configuration
 @ComponentScan("com.di.bean")
@@ -13,6 +14,7 @@ public class PrePostConfig {
         return new BeanPostProcessorImpl();
     }
     @Bean(initMethod = "init",destroyMethod = "destory")
+    @Lazy
     BeanWayService beanWayService(){
         BeanWayService beanWayService = new BeanWayService();
         beanWayService.setId(2);
