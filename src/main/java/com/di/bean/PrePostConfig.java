@@ -8,12 +8,19 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan("com.di.bean")
 public class PrePostConfig {
     //@Bean返回值是一个Bean，Bean的名称是方法名
+    @Bean
+    BeanPostProcessorImpl postProcessor(){
+        return new BeanPostProcessorImpl();
+    }
     @Bean(initMethod = "init",destroyMethod = "destory")
     BeanWayService beanWayService(){
-        return new BeanWayService();
+        BeanWayService beanWayService = new BeanWayService();
+        beanWayService.setId(2);
+        beanWayService.setName("第二步");
+        return  beanWayService;
     }
-    @Bean
-    JSR250WayService jsr250WayService(){
-        return new JSR250WayService();
-    }
+//    @Bean
+//    JSR250WayService jsr250WayService(){
+//        return new JSR250WayService();
+//    }
 }
